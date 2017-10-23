@@ -33,7 +33,7 @@ provider:
 
 functions:
   create:
-    handler: endpoints/create.create
+    handler: endpoints/todo/create.create
     events:
       - http:
           path: endpoints
@@ -41,7 +41,7 @@ functions:
           cors: true
 
   list:
-    handler: endpoints/list.list
+    handler: endpoints/todo/list.list
     events:
       - http:
           path: endpoints
@@ -49,7 +49,7 @@ functions:
           cors: true
 
   get:
-    handler: endpoints/get.get
+    handler: endpoints/todo/get.get
     events:
       - http:
           path: endpoints/{id}
@@ -57,7 +57,7 @@ functions:
           cors: true
 
   update:
-    handler: endpoints/update.update
+    handler: endpoints/todo/update.update
     events:
       - http:
           path: endpoints/{id}
@@ -65,7 +65,7 @@ functions:
           cors: true
 
   delete:
-    handler: endpoints/delete.delete
+    handler: endpoints/todo/delete.delete
     events:
       - http:
           path: endpoints/{id}

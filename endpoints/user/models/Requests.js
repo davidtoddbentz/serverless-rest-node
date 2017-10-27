@@ -1,23 +1,13 @@
 "use strict";
-var CreateRequest = (function () {
-    function CreateRequest(id, name, phone, addresses) {
-        this.id = id;
-        this.name = name;
-        this.phone = phone;
-        this.addresses = addresses;
+Object.defineProperty(exports, "__esModule", { value: true });
+const BaseRequests_1 = require("../BaseRequests");
+class CreateRequest extends BaseRequests_1.BaseRequest {
+    build() {
+        return JSON.stringify(this);
     }
-    return CreateRequest;
-}());
+}
 exports.CreateRequest = CreateRequest;
-var UpdateRequest = (function () {
-    function UpdateRequest(id, name, phone, addresses) {
-        this.id = id;
-        this.name = name;
-        this.phone = phone;
-        this.addresses = addresses;
-    }
-    return UpdateRequest;
-}());
+class UpdateRequest extends BaseRequests_1.BaseRequest {
+}
 exports.UpdateRequest = UpdateRequest;
-var s = new UpdateRequest('eee', '', '', null);
-console.log(s.id);
+//# sourceMappingURL=Requests.js.map

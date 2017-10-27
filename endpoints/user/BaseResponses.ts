@@ -1,11 +1,5 @@
-export class CreateResponse {
-}
-
-export class ReadResponse {
-}
-
-export class UpdateResponse {
-}
-
-export class DeleteResponse {
+export class BaseResponse {
+    constructor(data: object){
+        Object.assign(this, data);
+    }
 }

@@ -1,46 +1,46 @@
 'use strict';
+const BaseRestHandler = require('./BaseRestHandler.js');
 
-let BaseRestHandler = require('./BaseRestHandler.js')
-
-let requests = require('./BaseRequests.js');
-let responses = require('./Baseresponses.js');
+const {CreateRequest, UpdateRequest} = require('./models/Requests.js');
+const {CreateResponse, ReadResponse, UpdateResponse, DeleteResponse} = require('./models/Responses.js');
 
 class User extends BaseRestHandler {
 
-    constructor(){
-        super();
-
-        console.log(typeof(requests.CreateRequest));
-        var s = new requests.UpdateRequest('eee', '', '', null);
-        console.log(s.id);
-        this.CreateRequest = requests.CreateRequest;
-        this.UpdateRequest = requests.UpdateRequest;
-
-        this.CreateResponse = responses.CreateResponse;
-        this.UpdateResponse = responses.UpdateResponse;
-        this.ReadResponse = responses.ReadResponse;
-        this.DeleteResponse = responses.DeleteResponse;
-    }
     create(obj) {
-        console.log(typeof(this.CreateRequest));
-        console.log(new this.CreateRequest('y;', null, null, null).name);
-        console.log("stuff");
+        console.log(this.headers.id);
+        obj = new CreateRequest(obj);
+        return obj;
     }
+
     read(id) {
     }
+
     update(obj) {
     }
+
     patch(obj) {
     }
+
     delete(id) {
     }
 }
 
 
 module.exports.hanlder = (event, context, callback) => {
-    return new User()
-        .handle(event, context, callback);
+
+    return new User().handle(event, context, callback);
 
 };
 
-new User().create();
+let event = {}
+event.method = "POST";
+event.body =
+    {
+        "id":"hi",
+        "name":"namee"
+    };
+event.headers = {
+    "id":"5",
+    "name":"Paul's"
+}
+console.log(new User().handle(event, null, null));

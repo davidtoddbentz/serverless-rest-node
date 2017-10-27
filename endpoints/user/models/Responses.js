@@ -1,41 +1,16 @@
 "use strict";
-var CreateResponse = (function () {
-    function CreateResponse(id, name, phone, addresses) {
-        this.id = id;
-        this.name = name;
-        this.phone = phone;
-        this.addresses = addresses;
-    }
-    return CreateResponse;
-}());
+Object.defineProperty(exports, "__esModule", { value: true });
+const BaseResponses_1 = require("../BaseResponses");
+class CreateResponse extends BaseResponses_1.BaseResponse {
+}
 exports.CreateResponse = CreateResponse;
-var ReadResponse = (function () {
-    function ReadResponse(id, name, phone, addresses) {
-        this.id = id;
-        this.name = name;
-        this.phone = phone;
-        this.addresses = addresses;
-    }
-    return ReadResponse;
-}());
+class ReadResponse extends BaseResponses_1.BaseResponse {
+}
 exports.ReadResponse = ReadResponse;
-var UpdateResponse = (function () {
-    function UpdateResponse(id, name, phone, addresses) {
-        this.id = id;
-        this.name = name;
-        this.phone = phone;
-        this.addresses = addresses;
-    }
-    return UpdateResponse;
-}());
+class UpdateResponse extends BaseResponses_1.BaseResponse {
+}
 exports.UpdateResponse = UpdateResponse;
-var DeleteResponse = (function () {
-    function DeleteResponse(id, name, phone, addresses) {
-        this.id = id;
-        this.name = name;
-        this.phone = phone;
-        this.addresses = addresses;
-    }
-    return DeleteResponse;
-}());
+class DeleteResponse extends BaseResponses_1.BaseResponse {
+}
 exports.DeleteResponse = DeleteResponse;
+//# sourceMappingURL=Responses.js.map

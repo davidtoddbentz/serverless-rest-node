@@ -1,51 +1,29 @@
-export class CreateResponse {
+import {BaseResponse} from "../BaseResponses";
+
+export class CreateResponse extends BaseResponse{
     id: number;
     name: string;
     phone: string;
     addresses: string[];
-    constructor(id, name, phone, addresses){
-        this.id = id;
-        this.name = name;
-        this.phone = phone;
-        this.addresses = addresses;
-    }
 }
 
-export class ReadResponse {
+export class ReadResponse extends BaseResponse{
     id: number;
     name: string;
     phone: string;
     addresses: string[];
-    constructor(id, name, phone, addresses){
-        this.id = id;
-        this.name = name;
-        this.phone = phone;
-        this.addresses = addresses;
-    }
 }
 
-export class UpdateResponse {
+export class UpdateResponse extends BaseResponse{
     id: number;
     name: string;
     phone: string;
     addresses: string[];
-    constructor(id, name, phone, addresses){
-        this.id = id;
-        this.name = name;
-        this.phone = phone;
-        this.addresses = addresses;
-    }
 }
 
-export class DeleteResponse {
+export class DeleteResponse extends BaseResponse{
     id: number;
     name: string;
     phone: string;
     addresses: string[];
-    constructor(id, name, phone, addresses){
-        this.id = id;
-        this.name = name;
-        this.phone = phone;
-        this.addresses = addresses;
-    }
 }

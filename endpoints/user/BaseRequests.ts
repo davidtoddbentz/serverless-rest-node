@@ -1,5 +1,5 @@
-export class CreateRequest {
-}
-
-export class UpdateRequest {
+export class BaseRequest {
+    constructor(data: object){
+        Object.assign(this, data);
+    }
 }

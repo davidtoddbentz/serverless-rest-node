@@ -1,40 +1,26 @@
 'use strict';
 
-var requests = require('./BaseRequests.js');
-var responses = require('./Baseresponses.js');
-
-
 class BaseRestHandler {
 
     constructor(){
-
         this.POST = "POST";
         this.GET = "GET";
         this.PUT = "PUT";
         this.PATCH = "PATCH";
         this.DELETE = "DELETE";
-
-        this.CreateRequest = requests.CreateRequest;
-        this.UpdateRequest = requests.UpdateRequest;
-
-        this.CreateResponse = responses.CreateResponse;
-        this.UpdateResponse = responses.UpdateResponse;
-        this.ReadResponse = responses.ReadResponse;
-        this.DeleteResponse = responses.DeleteResponse;
     }
 
     call_method(event){
 
         switch (event.method) {
             case this.POST:
-                return this.create(new CreateRequest(event.body));
+                return this.create(event.body);
             case this.GET:
                 //return this.get(event.path);
-                break;
             case this.PUT:
-                return this.update(new UpdateRequest(event.body));
+                return this.update(event.body);
             case this.PATCH:
-                return this.patch(new UpdateRequest(event.body));
+                return this.patch(event.body);
             case this.DELETE:
                 //return this.delete(event.path);
             default:
@@ -43,8 +29,8 @@ class BaseRestHandler {
     }
 
     handle(event, context, callback){
-
-        let ret = this.method_map[event.method];
+        this.headers = event.headers;
+        let ret = this.call_method(event);
         return { "message": ret.build() };
     }
 
@@ -64,7 +50,5 @@ class BaseRestHandler {
         throw new TypeError("Do not call abstract method foo from child.");
     }
 }
-
-
 
 module.exports = BaseRestHandler;

@@ -1,13 +1,9 @@
 "use strict";
-var CreateRequest = (function () {
-    function CreateRequest() {
+Object.defineProperty(exports, "__esModule", { value: true });
+class BaseRequest {
+    constructor(data) {
+        Object.assign(this, data);
     }
-    return CreateRequest;
-}());
-exports.CreateRequest = CreateRequest;
-var UpdateRequest = (function () {
-    function UpdateRequest() {
-    }
-    return UpdateRequest;
-}());
-exports.UpdateRequest = UpdateRequest;
+}
+exports.BaseRequest = BaseRequest;
+//# sourceMappingURL=BaseRequests.js.map

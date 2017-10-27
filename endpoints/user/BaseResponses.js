@@ -1,25 +1,9 @@
 "use strict";
-var CreateResponse = (function () {
-    function CreateResponse() {
+Object.defineProperty(exports, "__esModule", { value: true });
+class BaseResponse {
+    constructor(data) {
+        Object.assign(this, data);
     }
-    return CreateResponse;
-}());
-exports.CreateResponse = CreateResponse;
-var ReadResponse = (function () {
-    function ReadResponse() {
-    }
-    return ReadResponse;
-}());
-exports.ReadResponse = ReadResponse;
-var UpdateResponse = (function () {
-    function UpdateResponse() {
-    }
-    return UpdateResponse;
-}());
-exports.UpdateResponse = UpdateResponse;
-var DeleteResponse = (function () {
-    function DeleteResponse() {
-    }
-    return DeleteResponse;
-}());
-exports.DeleteResponse = DeleteResponse;
+}
+exports.BaseResponse = BaseResponse;
+//# sourceMappingURL=BaseResponses.js.map

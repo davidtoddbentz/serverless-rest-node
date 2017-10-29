@@ -40,6 +40,7 @@ class User extends BaseRestHandler {
 module.exports.handler = (event, context, callback) => {
 
     let db = new DB();
+    console.log("in");
     callback(null, new User(db).handle(event, context, callback));
 
 };
@@ -68,3 +69,6 @@ event.headers = {
 };
 
 console.log(new User(db).handle(event, null, null));
+
+
+

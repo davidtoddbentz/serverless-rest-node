@@ -2,7 +2,7 @@
 
 const BaseDB = require('./BaseDB.js');
 
-const {BaseError, NotImplemented} = require('./user/Errors.js');
+const {BaseError, NotImplemented} = require('./Errors.js');
 
 class BaseRestHandler {
 
@@ -34,7 +34,7 @@ class BaseRestHandler {
 
     call_method(event){
 
-        switch (event.method) {
+        switch (event.httpMethod) {
             case this.POST:
                 return this._post(event.body);
             case this.GET:

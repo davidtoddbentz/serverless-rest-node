@@ -1,6 +1,6 @@
-import {BaseRequest} from "../BaseRequests";
+import {BaseRequest} from "../../BaseRequests";
 
-export class CreateRequest extends BaseRequest{
+export class PostRequest extends BaseRequest{
     id: number;
     name: string;
     phone: string;
@@ -10,7 +10,7 @@ export class CreateRequest extends BaseRequest{
     }
 }
 
-export class UpdateRequest extends BaseRequest{
+export class PutRequest extends BaseRequest{
     id: number;
     name: string;
     phone: string;

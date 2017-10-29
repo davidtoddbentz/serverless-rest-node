@@ -1,16 +1,48 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const BaseResponses_1 = require("../BaseResponses");
-class CreateResponse extends BaseResponses_1.BaseResponse {
+const BaseResponses_1 = require("../../BaseResponses");
+class PostResponse extends BaseResponses_1.BaseResponse {
+    build() {
+        return {
+            "id": this.id,
+            "name": this.name,
+            "phone": this.phone,
+            "addresses": this.addresses
+        };
+    }
 }
-exports.CreateResponse = CreateResponse;
-class ReadResponse extends BaseResponses_1.BaseResponse {
+exports.PostResponse = PostResponse;
+class GetResponse extends BaseResponses_1.BaseResponse {
+    build() {
+        return {
+            "id": this.id,
+            "name": this.name,
+            "phone": this.phone,
+            "addresses": this.addresses
+        };
+    }
 }
-exports.ReadResponse = ReadResponse;
-class UpdateResponse extends BaseResponses_1.BaseResponse {
+exports.GetResponse = GetResponse;
+class PutResponse extends BaseResponses_1.BaseResponse {
+    build() {
+        return {
+            "id": this.id,
+            "name": this.name,
+            "phone": this.phone,
+            "addresses": this.addresses
+        };
+    }
 }
-exports.UpdateResponse = UpdateResponse;
+exports.PutResponse = PutResponse;
 class DeleteResponse extends BaseResponses_1.BaseResponse {
+    build() {
+        return {
+            "id": this.id,
+            "name": this.name,
+            "phone": this.phone,
+            "addresses": this.addresses
+        };
+    }
 }
 exports.DeleteResponse = DeleteResponse;
 //# sourceMappingURL=Responses.js.map

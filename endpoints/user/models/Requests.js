@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const BaseRequests_1 = require("../BaseRequests");
-class CreateRequest extends BaseRequests_1.BaseRequest {
+const BaseRequests_1 = require("../../BaseRequests");
+class PostRequest extends BaseRequests_1.BaseRequest {
     build() {
         return JSON.stringify(this);
     }
 }
-exports.CreateRequest = CreateRequest;
-class UpdateRequest extends BaseRequests_1.BaseRequest {
+exports.PostRequest = PostRequest;
+class PutRequest extends BaseRequests_1.BaseRequest {
 }
-exports.UpdateRequest = UpdateRequest;
+exports.PutRequest = PutRequest;
 //# sourceMappingURL=Requests.js.map

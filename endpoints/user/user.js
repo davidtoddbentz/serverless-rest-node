@@ -6,6 +6,11 @@ const {PostResponse, GetResponse, PutResponse, DeleteResponse} = require('./mode
 
 const DB = require('./DB.js');
 
+let DB_CONNECTION=null;
+console.log(DB_CONNECTION);
+if (!DB_CONNECTION)
+    DB_CONNECTION = new DB();
+
 class User extends BaseRestHandler {
 
     constructor(db){
@@ -15,12 +20,15 @@ class User extends BaseRestHandler {
     }
 
     post(obj) {
-        console.log("yah");
+        console.log('oh');
+        console.log(obj);
         this.db.create(obj);
+        console.log(DB_CONNECTION);
         return obj;
     }
 
     get(id) {
+        console.log(this.db);
         return this.db.read(id);
     }
 
@@ -39,36 +47,34 @@ class User extends BaseRestHandler {
 
 module.exports.handler = (event, context, callback) => {
 
-    let db = new DB();
-    console.log("in");
-    callback(null, new User(db).handle(event, context, callback));
+    callback(null, new User(DB_CONNECTION).handle(event, context, callback));
 
 };
 
-let event = {};
-event.method = "POST";
-event.body =
-    {
-        "id":"hi",
-        "name":"namee"
-    };
-event.headers = {
-    "id":"5",
-    "name":"Paul's"
-};
-
-let db = new DB();
-console.log(new User(db).handle(event, null, null));
-
-event.method = "GET";
-event.path = "hi";
-
-event.headers = {
-    "id":"5",
-    "name":"Paul's"
-};
-
-console.log(new User(db).handle(event, null, null));
+// let event = {};
+// event.method = "POST";
+// event.body =
+//     {
+//         "id":"hi",
+//         "name":"namee"
+//     };
+// event.headers = {
+//     "id":"5",
+//     "name":"Paul's"
+// };
+//
+// let db = new DB();
+// console.log(new User(db).handle(event, null, null));
+//
+// event.method = "GET";
+// event.path = "hi";
+//
+// event.headers = {
+//     "id":"5",
+//     "name":"Paul's"
+// };
+//
+// console.log(new User(db).handle(event, null, null));
 
 
 

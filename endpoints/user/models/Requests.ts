@@ -1,6 +1,7 @@
 import {BaseRequest} from "../../BaseRequests";
 
 export class PostRequest extends BaseRequest{
+
     id: number;
     name: string;
     phone: string;

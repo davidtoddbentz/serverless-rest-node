@@ -1,0 +1,78 @@
+service: serverless-rest-node
+
+plugins:
+  - serverless-offline
+  - serverless-plugin-include-dependencies
+  - serverless-dynamodb-local
+
+package:
+  exclude:
+    - node_modules/**
+
+provider:
+  name: aws
+  runtime: nodejs6.10
+  environment:
+    DYNAMODB_TABLE: ${self:service}-${opt:stage, self:provider.stage}
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:Query
+        - dynamodb:Scan
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+        - dynamodb:UpdateItem
+        - dynamodb:DeleteItem
+      Resource: "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:provider.environment.DYNAMODB_TABLE}"
+
+functions:
+  user_post:
+    handler: endpoints/user/user.handler
+    events:
+      - http:
+          path: users
+          method: post
+          cors: true
+
+  user_get:
+    handler: endpoints/user/user.handler
+    events:
+      - http:
+          path: users/{id}
+          method: get
+          cors: true
+
+  user_put:
+    handler: endpoints/user/user.handler
+    events:
+      - http:
+          path: users
+          method: put
+          cors: true
+
+  user_delete:
+    handler: endpoints/user/user.handler
+    events:
+      - http:
+          path: users/{id}
+          method: delete
+          cors: true
+
+resources:
+  Resources:
+    TodosDynamoDbTable:
+      Type: 'AWS::DynamoDB::Table'
+      DeletionPolicy: Retain
+      Properties:
+        AttributeDefinitions:
+          -
+            AttributeName: id
+            AttributeType: S
+        KeySchema:
+          -
+            AttributeName: id
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+        TableName: ${self:provider.environment.DYNAMODB_TABLE}

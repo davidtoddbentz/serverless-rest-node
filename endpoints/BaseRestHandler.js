@@ -3,6 +3,9 @@
 const BaseDB = require('./BaseDB.js');
 
 const {BaseError, NotImplemented} = require('./Errors.js');
+let log4js = require('log4js');
+let logger = log4js.getLogger();
+logger.level = 'debug';
 
 class BaseRestHandler {
 
@@ -30,19 +33,21 @@ class BaseRestHandler {
         this.put_response = PutResponse;
 
         this.delete_response = DeleteResponse;
+        logger.info('super constructed');
     }
 
-    call_method(event){
+    call_method(path, body, httpMethod){
 
-        switch (event.httpMethod) {
+        logger.info('calling ' + httpMethod);
+        switch (httpMethod) {
             case this.POST:
-                return this._post(event.body);
+                return this._post(body);
             case this.GET:
-                return this._get(event.path);
+                return this._get(path);
             case this.PUT:
-                return this._put(event.path, event.body);
+                return this._put(path, body);
             case this.DELETE:
-                return this._delete(event.path);
+                return this._delete(path);
             default:
                 return null;
         }
@@ -50,17 +55,22 @@ class BaseRestHandler {
 
     handle(event, context, callback){
         try {
+            logger.info('handler');
             this.headers = event.headers;
-            let ret = this.call_method(event);
-            return {"message": ret.build()};
+            let ret = this.call_method(event.path, JSON.parse(event.body), event.httpMethod);
+            return {
+                statusCode: 200,
+                body: JSON.stringify(ret.build())
+            };
         }
         catch(error)
         {
             if (error instanceof BaseError){
+                logger.warn('client: ' + error);
                 return error.build();
             }
             else{
-                console.log(error);
+                logger.error('server error: ' + error);
                 return {"message":"Server Error", "id":500}
             }
         }
@@ -68,18 +78,22 @@ class BaseRestHandler {
 
 
     _post(obj) {
+        logger.debug(this._post.name + ' start');
         obj = new this.post_request(obj);
         return new this.post_response(this.post(obj));
         
     }
     _get(id) {
+        logger.debug(this._get.name + ' start');
         return new this.get_response(this.get(id));
     }
     _put(id, obj) {
+        logger.debug(this._put.name + ' start');
         obj = new this.put_request(obj);
         return new this.put_response(this.put(id, obj));
     }
     _delete(id) {
+        logger.debug(this._delete.name + ' start');
         return new this.delete_response(this.delete(id));
     }
 

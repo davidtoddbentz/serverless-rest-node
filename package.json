@@ -1,15 +1,22 @@
 {
-  "name": "aws-rest-api-offline",
+  "name": "aws-rest-node",
   "version": "1.0.0",
-  "description": "Serverless REST API with DynamoDB and offline support",
+  "description": "Serverless REST API FRAMEWORK with tests",
   "repository": "",
-  "author": "Christoph Gysin <christoph.gysin@gmail.com>",
-  "license": "MIT",
+  "author": "David Bentz <davidtoddbentz@gmail.com>",
   "dependencies": {
     "aws-sdk": "^2.12.0",
     "serverless-dynamodb-local": "^0.2.18",
     "serverless-offline": "^3.8.3",
     "typescript-json-schema": "^0.17.0",
-    "log4js":"^2.3.10"
+    "serverless-plugin-include-dependencies": "^3.0.0",
+    "dynamodb": "^1.0.0",
+    "log4js": "^2.3.10",
+    "mocha": "^4.0.1",
+    "chai": "^4.1.2",
+    "nyc": "^11.2.1"
+  },
+  "scripts": {
+    "test": "nyc mocha --recursive"
   }
 }

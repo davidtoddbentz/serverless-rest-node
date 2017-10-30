@@ -34,7 +34,6 @@ class DB extends BaseDB{
             },
         };
 
-        // fetch todo from the database
         dynamodb.get(params, (error, result) => {
             // handle potential errors
             if (error) {

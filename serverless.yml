@@ -27,7 +27,7 @@ provider:
 
 functions:
   user_post:
-    handler: endpoints/user/user.handler
+    handler: endpoints/user/Endpoint.handler
     events:
       - http:
           path: users
@@ -35,7 +35,7 @@ functions:
           cors: true
 
   user_get:
-    handler: endpoints/user/user.handler
+    handler: endpoints/user/Endpoint.handler
     events:
       - http:
           path: users/{id}
@@ -43,7 +43,7 @@ functions:
           cors: true
 
   user_put:
-    handler: endpoints/user/user.handler
+    handler: endpoints/user/Endpoint.handler
     events:
       - http:
           path: users
@@ -51,7 +51,7 @@ functions:
           cors: true
 
   user_delete:
-    handler: endpoints/user/user.handler
+    handler: endpoints/user/Endpoint.handler
     events:
       - http:
           path: users/{id}

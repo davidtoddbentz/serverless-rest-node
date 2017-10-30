@@ -2,7 +2,7 @@
 
 const BaseDB = require('./BaseDB.js');
 
-const {BaseError, NotImplemented} = require('./Errors.js');
+const {BaseError, NotImplemented, ClientError} = require('./Errors.js');
 let log4js = require('log4js');
 let logger = log4js.getLogger();
 logger.level = 'debug';
@@ -17,7 +17,7 @@ class BaseRestHandler {
         this.PUT = "PUT";
         this.DELETE = "DELETE";
 
-        if (db instanceof BaseDB){
+        if (db instanceof BaseDB) {
             this.db = db;
         }
         else{
@@ -49,7 +49,7 @@ class BaseRestHandler {
             case this.DELETE:
                 return this._delete(path);
             default:
-                return null;
+                throw new ClientError("httpMethod not supported");
         }
     }
 
@@ -57,7 +57,8 @@ class BaseRestHandler {
         try {
             logger.info('handler');
             this.headers = event.headers;
-            let ret = this.call_method(event.path, JSON.parse(event.body), event.httpMethod);
+            event.body = event.body ? JSON.parse(event.body) : null;
+            let ret = this.call_method(event.path, event.body, event.httpMethod);
             return {
                 statusCode: 200,
                 body: JSON.stringify(ret.build())
@@ -111,6 +112,5 @@ class BaseRestHandler {
         throw new NotImplemented();
     }
 }
-
 
 module.exports = BaseRestHandler;

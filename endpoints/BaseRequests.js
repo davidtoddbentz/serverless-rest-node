@@ -6,7 +6,7 @@ logger.level = 'debug';
 class BaseRequest {
     constructor(data) {
         logger.debug('Constructing ' + this.constructor.name);
-        logger.debug(data.toString());
+        logger.debug(String(data));
         Object.assign(this, data);
     }
 }

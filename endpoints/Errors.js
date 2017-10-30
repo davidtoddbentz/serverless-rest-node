@@ -8,7 +8,7 @@ class BaseError extends Error{
     }
 
     build(){
-        return {"message":this.message, "id":id}
+        return {"message":this.message, "id":this.id}
     }
 
 }
@@ -23,3 +23,13 @@ class NotImplemented extends BaseError{
 }
 
 exports.NotImplemented = NotImplemented;
+
+class ClientError extends BaseError{
+
+    constructor(message){
+        super(400, message);
+    }
+
+}
+
+exports.ClientError = ClientError;

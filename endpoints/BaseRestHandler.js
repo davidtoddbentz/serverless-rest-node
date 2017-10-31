@@ -4,7 +4,7 @@ const BaseDB = require('./BaseDB.js');
 
 const {BaseError, NotImplemented, ClientError} = require('./Errors.js');
 let log4js = require('log4js');
-let logger = log4js.getLogger();
+let logger = log4js.getLogger('BaseRestHandler');
 logger.level = 'debug';
 
 class BaseRestHandler {
@@ -36,18 +36,22 @@ class BaseRestHandler {
         logger.info('super constructed');
     }
 
-    call_method(path, body, httpMethod){
+    call_method(path, body, httpMethod, callback){
+
+        let func = function(err, data){
+            callback(err, data);
+        };
 
         logger.info('calling ' + httpMethod);
         switch (httpMethod) {
             case this.POST:
-                return this._post(body);
+                return this._post(body, func);
             case this.GET:
-                return this._get(path);
+                return this._get(path,  func);
             case this.PUT:
-                return this._put(path, body);
+                return this._put(path, body, func);
             case this.DELETE:
-                return this._delete(path);
+                return this._delete(path, func);
             default:
                 throw new ClientError("httpMethod not supported");
         }
@@ -56,59 +60,80 @@ class BaseRestHandler {
     handle(event, context, callback){
         try {
             logger.info('handler');
+            logger.debug(JSON.stringify(event));
+            logger.debug(JSON.stringify(context));
+
             this.headers = event.headers;
             event.body = event.body ? JSON.parse(event.body) : null;
-            let ret = this.call_method(event.path, event.body, event.httpMethod);
-            return {
-                statusCode: 200,
-                body: JSON.stringify(ret.build())
-            };
+
+            this.call_method(event.pathParameters, event.body, event.httpMethod, function(err, data){
+                if (err) {
+                    throw err;
+                }
+                logger.info('returning');
+                callback({
+                    statusCode: 200,
+                    body: JSON.stringify(data.build())
+                });
+            });
         }
         catch(error)
         {
             if (error instanceof BaseError){
                 logger.warn('client: ' + error);
-                return error.build();
+                callback(error.build());
             }
             else{
                 logger.error('server error: ' + error);
-                return {"message":"Server Error", "id":500}
+                callback( {"message":"Server Error", "id":500} );
             }
         }
     }
 
 
-    _post(obj) {
+    _post(obj, callback) {
         logger.debug(this._post.name + ' start');
         obj = new this.post_request(obj);
-        return new this.post_response(this.post(obj));
+        let post_response = this.post_response;
+        this.post(obj, function(err, data){
+            callback(err, new post_response(data));
+        });
         
     }
-    _get(id) {
+    _get(id, callback) {
         logger.debug(this._get.name + ' start');
-        return new this.get_response(this.get(id));
+        let get_response = this.get_response;
+        this.get(id, function(err, data){
+            callback(err, new get_response(data));
+        });
     }
-    _put(id, obj) {
+    _put(id, obj, callback) {
         logger.debug(this._put.name + ' start');
         obj = new this.put_request(obj);
-        return new this.put_response(this.put(id, obj));
+        let put_response = this.put_response;
+        this.put(id, obj, function(err, data){
+            callback(err, new put_response(data));
+        });
     }
-    _delete(id) {
+    _delete(id, callback) {
+        let delete_response = this.delete_response;
         logger.debug(this._delete.name + ' start');
-        return new this.delete_response(this.delete(id));
+        this.delete(id, function(err, data){
+            callback(err, new delete_response(data));
+        });
     }
 
 
-    post(obj) {
+    post(obj, callback) {
         throw new NotImplemented();
     }
-    get(id) {
+    get(id, callback) {
         throw new NotImplemented();
     }
-    put(id, obj) {
+    put(id, obj, callback) {
         throw new NotImplemented();
     }
-    delete(id) {
+    delete(id, callback) {
         throw new NotImplemented();
     }
 }

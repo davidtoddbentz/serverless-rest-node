@@ -10,5 +10,7 @@ module.exports.handler = (event, context, callback) => {
     if (!DB_CONNECTION)
         DB_CONNECTION = new DB();
 
-    callback(null, new User(DB_CONNECTION).handle(event, context, callback));
+    new User(DB_CONNECTION).handle(event, context, function(data){
+        callback(data);
+    });
 };

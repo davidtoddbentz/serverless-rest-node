@@ -1,18 +1,18 @@
 class BaseDB{
 
-    create(obj){
+    create(obj, callback){
 
     }
 
-    read(id){
+    read(id, callback){
 
     }
 
-    update(id, obj){
+    update(id, obj, callback){
 
     }
 
-    delete(id){
+    delete(id, callback){
 
     }
 }
